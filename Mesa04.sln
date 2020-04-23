@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mesa04", "Mesa04\Mesa04.csproj", "{6404E07E-0466-41BB-9056-2817937F88FA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6404E07E-0466-41BB-9056-2817937F88FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6404E07E-0466-41BB-9056-2817937F88FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6404E07E-0466-41BB-9056-2817937F88FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6404E07E-0466-41BB-9056-2817937F88FA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8B2A37CE-C0AD-4AD8-8761-E2B05622825D}
+	EndGlobalSection
+EndGlobal
