@@ -1,6 +1,6 @@
 using System;
 
-namespace Mesa04.Models
+namespace Mesa04.Models.ViewModels
 {
     public class ErrorViewModel
     {

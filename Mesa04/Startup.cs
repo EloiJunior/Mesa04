@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using Mesa04.Models;
 
 namespace Mesa04
 {
@@ -33,6 +35,9 @@ namespace Mesa04
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddDbContext<Mesa04Context>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("Mesa04Context")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
