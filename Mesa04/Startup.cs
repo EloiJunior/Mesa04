@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Mesa04.Models;
+using Mesa04.Services;
 
 namespace Mesa04
 {
@@ -38,6 +39,8 @@ namespace Mesa04
 
             services.AddDbContext<Mesa04Context>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("Mesa04Context")));
+
+            services.AddScoped<DepartamentoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

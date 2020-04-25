@@ -23,7 +23,7 @@ namespace Mesa04.Models
 
         [Required(ErrorMessage = "{0} required")] //anotation de verificação de campo obrigatorio
         [Display(Name = "Birth Date")]            //tag usada para personalizar como o atributo aparecerá no display, que é a tela do site
-        //[DataType(DataType.Date)]                // anotation usada para personalizar como aparecerá os dados na tela
+        [DataType(DataType.Date)]                // anotation usada para personalizar como aparecerá os dados na tela
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]  //anotation usada para configurar a data como dia, mes e ano.
         public DateTime Aniversario { get; set; }
 

@@ -6,22 +6,24 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Mesa04.Models;
+using Mesa04.Models.ViewModels;
+using Mesa04.Services;
 
 namespace Mesa04.Controllers
 {
     public class DepartamentosController : Controller
     {
-        private readonly Mesa04Context _context;
+        private readonly DepartamentoService _departamentoService;
 
-        public DepartamentosController(Mesa04Context context)
+        public DepartamentosController(DepartamentoService departamentoService)
         {
-            _context = context;
+            _departamentoService = departamentoService;
         }
 
         // GET: Departamentos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Departamento.ToListAsync());
+            return View(await _departamentoService.FindAllAsync());
         }
 
         // GET: Departamentos/Details/5
@@ -32,12 +34,7 @@ namespace Mesa04.Controllers
                 return NotFound();
             }
 
-            var departamento = await _context.Departamento
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (departamento == null)
-            {
-                return NotFound();
-            }
+            var departamento = await _departamentoService.FindByIdAsync(id.Value);
 
             return View(departamento);
         }
@@ -57,8 +54,8 @@ namespace Mesa04.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(departamento);
-                await _context.SaveChangesAsync();
+
+                await _departamentoService.InsertAsync(departamento);
                 return RedirectToAction(nameof(Index));
             }
             return View(departamento);
@@ -72,11 +69,8 @@ namespace Mesa04.Controllers
                 return NotFound();
             }
 
-            var departamento = await _context.Departamento.FindAsync(id);
-            if (departamento == null)
-            {
-                return NotFound();
-            }
+            var departamento = await _departamentoService.FindByIdAsync(id.Value);
+
             return View(departamento);
         }
 
@@ -89,19 +83,19 @@ namespace Mesa04.Controllers
         {
             if (id != departamento.Id)
             {
-                return NotFound();
+                return BadRequest();
             }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(departamento);
-                    await _context.SaveChangesAsync();
+                    await _departamentoService.UpdateAsync(departamento);
+                   
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DepartamentoExists(departamento.Id))
+                    if (!await _departamentoService.DepartamentoExists(departamento.Id))
                     {
                         return NotFound();
                     }
@@ -123,8 +117,8 @@ namespace Mesa04.Controllers
                 return NotFound();
             }
 
-            var departamento = await _context.Departamento
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var departamento = await _departamentoService.FindByIdAsync(id.Value);
+
             if (departamento == null)
             {
                 return NotFound();
@@ -138,15 +132,15 @@ namespace Mesa04.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var departamento = await _context.Departamento.FindAsync(id);
-            _context.Departamento.Remove(departamento);
-            await _context.SaveChangesAsync();
+            await _departamentoService.RemoveAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DepartamentoExists(int id)
+        public async Task<bool> Exists(int id)
         {
-            return _context.Departamento.Any(e => e.Id == id);
+            return await _departamentoService.DepartamentoExists(id);
         }
+
+
     }
 }
