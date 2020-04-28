@@ -1,10 +1,10 @@
-﻿@model Mesa04.Models.Operador
+﻿@model Mesa04.Models.ViewModels.OperadorFormViewModel
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>@ViewData["Title"]</h2>
 
 <h4>Operador</h4>
 <hr />
@@ -12,29 +12,37 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Operador.Id" />
             <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
+                <label asp-for="Operador.Nome" class="control-label"></label>
+                <input asp-for="Operador.Nome" class="form-control" />
+                <span asp-validation-for="Operador.Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label asp-for="Operador.Email" class="control-label"></label>
+                <input asp-for="Operador.Email" class="form-control" />
+                <span asp-validation-for="Operador.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Aniversario" class="control-label"></label>
-                <input asp-for="Aniversario" class="form-control" />
-                <span asp-validation-for="Aniversario" class="text-danger"></span>
+                <label asp-for="Operador.Aniversario" class="control-label"></label>
+                <input asp-for="Operador.Aniversario" class="form-control" />
+                <span asp-validation-for="Operador.Aniversario" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SalarioBase" class="control-label"></label>
-                <input asp-for="SalarioBase" class="form-control" />
-                <span asp-validation-for="SalarioBase" class="text-danger"></span>
+                <label asp-for="Operador.SalarioBase" class="control-label"></label>
+                <input asp-for="Operador.SalarioBase" class="form-control" />
+                <span asp-validation-for="Operador.SalarioBase" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <!--muito importante esse bloco, é através dele que criamos a caixinha de seleção dos departamentos, quando estamos criando o Operador-->
+                <label asp-for="Operador.DepartamentoId" class="control-label"></label>
+                <select asp-for="Operador.DepartamentoId" asp-items="@(new SelectList(Model.Departamentos,"Id","Nome"))" class="form-control"></select>
+                <!--select é usado para criar a caixinha de seleção// e o asp-items é para gerar as informações que estarao na caixinha, objeto Departamento, chave Id, e o que vou apresentar que é o Nome-->
+                <span asp-validation-for="Operador.DepartamentoId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-danger" />
             </div>
         </form>
     </div>

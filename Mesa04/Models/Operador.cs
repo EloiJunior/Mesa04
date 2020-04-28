@@ -36,9 +36,9 @@ namespace Mesa04.Models
         
         public Departamento Departamento { get; set; } //associação de 1 Operador com apenas 1 Departamento
 
-        /*
-        public int DepartamentoId { get; set; } //foreign key
-        */
+        
+        public int DepartamentoId { get; set; } //foreign key, para forçar que esse campo não possa ser nulo na tabela de operador, uma vez que o tipo "int" não pode ser nulo
+        
 
         //tirei a associação pois não quero associar o operador ao departamento de origem da operação que é o Tipo
         //public Tipo Tipo { get; set; } //associação de 1 Operador com apenas 1 Departamento

@@ -7,12 +7,17 @@ namespace Mesa04.Models
 {
     public class Departamento
     {
+
+
         public int Id { get; set; }                            //atributo basico da classe
+
         public string Nome { get; set; }                       //atributo basico da classe
 
         //associação com a classe Operador, 1 Departamento tem varios Operadores, 
         public ICollection<Operador> Operadores { get; set; } = new List<Operador>();
         //já instanciando a coleção, só para garantir que a minha lista seja instanciada
+
+
 
         //construtor sem argumento, pois o framework precisa dele
         public Departamento()
