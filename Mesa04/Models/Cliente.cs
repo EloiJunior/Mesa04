@@ -34,7 +34,7 @@ namespace Mesa04.Models
 
         //[Required(ErrorMessage = "Name required")]    //anotation que define que o campo é obrigatorio, e mensagem de erro se quiser
         //[DisplayFormat(DataFormatString = "{0:000\\.000\\.000-00}")]
-        public int RegistroNacional { get; set; } //atributo basico
+        public string RegistroNacional { get; set; } //atributo basico
 
 
         //associação de 1 Operador com varios Fechamentos, já instanciando a coleção, para garantir que a lista seja criada
@@ -46,7 +46,7 @@ namespace Mesa04.Models
         }
 
         //construtor com argumento
-        public Cliente(int id, string nome, string email, DateTime? aniversario, /*TipoRegistroNacional tipoRegistroNacional,*/ char registroNacional)//Tipo tipo//
+        public Cliente(int id, string nome, string email, DateTime? aniversario, /*TipoRegistroNacional tipoRegistroNacional,*/ string registroNacional)//Tipo tipo//
         {
             Id = id;
             Nome = nome;
