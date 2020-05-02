@@ -33,7 +33,7 @@ namespace Mesa04.Models
         public DateTime Data { get; set; }     //atributo basico
 
         [NotMapped]
-        public Cliente Cliente { get; set; } //associação de 1 Fechamento para 1 Operador
+        public Cliente Cliente { get; set; } //associação de 1 Fechamento para 1 Cliente
 
         
         [Required(ErrorMessage = "{0} required")]  //como opção podemos automatizar alguns strings da mensagem de erro

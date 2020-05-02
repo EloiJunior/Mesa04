@@ -24,9 +24,12 @@ namespace Mesa04.Models
 
         public DbSet<Mesa04.Models.TipoRegistroNacional> TipoRegistroNacional { get; set; }
 
+        public DbSet<Mesa04.Models.TipoOperacao> TipoOperacao { get; set; }
+
         internal Task FindAllAsync()
         {
             throw new NotImplementedException();
         }
+
     }
 }
