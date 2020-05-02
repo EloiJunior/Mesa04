@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Mesa04.Models;
 using Mesa04.Services;          // para criar injeção de dependencia com o OperadorService
@@ -22,9 +19,7 @@ namespace Mesa04.Controllers
         {
             _operadorService = operadorService;
             _departamentoService = departamentoService;                          // dependencia do serviço criada para usar a lista de departamentos no OperadorFormView
-
         }
-
 
 
         // GET: Operadors
@@ -34,12 +29,9 @@ namespace Mesa04.Controllers
             return View(await _context.Operador.ToListAsync());
             */
             var list = await _operadorService.FindAllAsync();
-
             return View(list);
-
         }
         
-
         
         // GET: Operadors/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -108,7 +100,6 @@ namespace Mesa04.Controllers
             return View(operador);
         }
         
-
         
         // GET: Operadors/Edit/5
         public async Task<IActionResult> Edit(int? id) //esse id opcional colocado aqui é somente para não dar erro, pois na verdade o id é obrigatorio
@@ -132,7 +123,6 @@ namespace Mesa04.Controllers
                 return NotFound();
                 */
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
-
             }
 
             List<Departamento> departamentos = await _departamentoService.FindAllAsync();
@@ -188,7 +178,6 @@ namespace Mesa04.Controllers
                         return NotFound();
                         */
                         return RedirectToAction(nameof(Error), new { message = "Id not found" });
-
                     }
                     else
                     {
@@ -196,7 +185,6 @@ namespace Mesa04.Controllers
                         throw ;
                         */
                         return RedirectToAction(nameof(Error), new { message = e.Message });
-
                     }
                 }
                 return RedirectToAction(nameof(Index));
@@ -230,6 +218,7 @@ namespace Mesa04.Controllers
                 */
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
+                    
 
             return View(operador);
         }
@@ -267,6 +256,8 @@ namespace Mesa04.Controllers
         }
         */
 
+
+        //Metodo: Error
         public IActionResult Error(string message) //metodo de erro, para personalizar na camada de serviço os erros
         {
             var viewModel = new ErrorViewModel

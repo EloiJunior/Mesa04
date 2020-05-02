@@ -1,44 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Mesa04.Models;
-using Mesa04.Models.ViewModels;
-using Mesa04.Services;
-using System.Diagnostics;  // inclui para usar o Activity no metodo Error
-using Mesa04.Services.Exceptions;
+using Mesa04.Services;//inclui para usar service
+using Mesa04.Services.Exceptions;//inclui para usar o IntegrityException no DeleteConfirmed
+using Mesa04.Models.ViewModels;//inclui para usar o ErrorViewModel no metodo Error
+using System.Diagnostics; // inclui para usar o Activity no metodo Error
 
 namespace Mesa04.Controllers
 {
-    public class ClientesController : Controller
+    public class TipoRegistroNacionalsController : Controller
     {
         /*
         private readonly Mesa04Context _context;
         */
 
-        private readonly ClienteService _clienteService;
         private readonly TipoRegistroNacionalService _tipoRegistroNacionalService;
 
-
-        public ClientesController (ClienteService  clienteService, TipoRegistroNacionalService tipoRegistroNacionalService)
+        public TipoRegistroNacionalsController(TipoRegistroNacionalService tipoRegistroNacionalService)
         {
-            _clienteService = clienteService;
             _tipoRegistroNacionalService = tipoRegistroNacionalService;
         }
 
-        // GET: Clientes
+        // GET: TipoRegistroNacionals
         public async Task<IActionResult> Index()
         {
             /*
-            return View(await _context.Cliente.ToListAsync());
+            return View(await _context.TipoRegistroNacional.ToListAsync());
             */
-            var list = await _clienteService.FindAllAsync();
-            
+
+            var list = await _tipoRegistroNacionalService.FindAllAsync();
+
             return View(list);
+
+
         }
 
-        // GET: Clientes/Details/5
+        // GET: TipoRegistroNacionals/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -49,12 +47,13 @@ namespace Mesa04.Controllers
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
             /*
-            var cliente = await _context.Cliente
+            var tipoRegistroNacional = await _context.TipoRegistroNacional
                 .FirstOrDefaultAsync(m => m.Id == id);
-                */
-            var cliente = await _clienteService.FindByIdAsync(id.Value);
+            */
 
-            if (cliente == null)
+            var tipoRegistroNacional = await _tipoRegistroNacionalService.FindByIdAsync(id.Value);
+
+            if (tipoRegistroNacional == null)
             {
                 /*
                 return NotFound();
@@ -63,48 +62,41 @@ namespace Mesa04.Controllers
 
             }
 
-            return View(cliente);
+            return View(tipoRegistroNacional);
         }
+
+
+        // GET: TipoRegistroNacionals/Create
+        public IActionResult Create()
         
-        // GET: Clientes/Create
-        public async Task<IActionResult> Create()
         {
-            /*
-            //return View();
-            */
-            
-            var tipoRegistroNacionals = await _tipoRegistroNacionalService.FindAllAsync();   //var tipoRegistroNacional = await _context.FindAllAsync(); //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
-            var viewModel = new ClienteFormViewModel { TipoRegistroNacionals = tipoRegistroNacionals };  //codigo para instanciar um novo OperadorFormViewModel já começando com a lista de departamentos acima, e chamando esse formulario de viewModel
-           return View(viewModel);                                                       //codigo que manda esse novo formulario já com a lista de departamentos criada para a View
-
+            return View();
         }
-        
 
-        // POST: Clientes/Create
+
+        // POST: TipoRegistroNacionals/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[HttpPost, ActionName("Create")]
-        //public async Task<IActionResult> Create([Bind("Id,Nome,Email,Aniversario,TipoRegistroNacional,RegistroNacional")] Cliente cliente)
-
-        public async Task<IActionResult> Create([Bind("Id,Nome,Email,Aniversario,TipoRegistroNacionalId,RegistroNacional")] Cliente cliente)
+        /*
+        public async Task<IActionResult> Create([Bind("Id,Nome")] TipoRegistroNacional tipoRegistroNacional)
+        */
+        public async Task<IActionResult> Create([Bind("Id,Nome")] TipoRegistroNacional tipoRegistroNacional)
         {
-           // if (ModelState.IsValid)
-            //{
+            if (ModelState.IsValid)
+            {
                 /*
-                _context.Add(cliente);
+                _context.Add(tipoRegistroNacional);
                 await _context.SaveChangesAsync();
                 */
-                await _clienteService.InsertAsync(cliente);
+                await _tipoRegistroNacionalService.InsertAsync(tipoRegistroNacional);
                 return RedirectToAction(nameof(Index));
-
-           // }
-             //return View(cliente);
+            }
+            return View(tipoRegistroNacional);
         }
 
-
-        // GET: Clientes/Edit/5
+        // GET: TipoRegistroNacionals/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -115,41 +107,37 @@ namespace Mesa04.Controllers
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
             /*
-            var cliente = await _context.Cliente.FindAsync(id);
+            var tipoRegistroNacional = await _context.TipoRegistroNacional.FindAsync(id);
             */
-            var cliente = await _clienteService.FindByIdAsync(id.Value); // o id.Value é porque lá encima o argumento está como opcional
+            var tipoRegistroNacional = await _tipoRegistroNacionalService.FindByIdAsync(id.Value); // o id.Value é porque lá encima o argumento está como opcional
 
-            if (cliente == null)
+            if (tipoRegistroNacional == null)
             {
                 /*
                 return NotFound();
                 */
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
-            List<TipoRegistroNacional> tipoRegistroNacionals = await _tipoRegistroNacionalService.FindAllAsync();
-            ClienteFormViewModel viewModel = new ClienteFormViewModel { Cliente= cliente, TipoRegistroNacionals = tipoRegistroNacionals };
-            /*
-            return View(cliente);
-            */
-            return View(viewModel);
+            return View(tipoRegistroNacional);
         }
 
-        // POST: Clientes/Edit/5
+        // POST: TipoRegistroNacionals/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         /*
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Email,Aniversario,TipoRegistroNacional,RegistroNacional")] Cliente cliente)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome")] TipoRegistroNacional tipoRegistroNacional)
         */
-        public async Task<IActionResult> Edit(int id, Cliente cliente)
+        public async Task<IActionResult> Edit(int id,TipoRegistroNacional tipoRegistroNacional)
         {
-            if (id != cliente.Id)
+            if (id != tipoRegistroNacional.Id)
             {
                 /*
                 return NotFound();
                 */
                 return RedirectToAction(nameof(Error), new { message = "Id mismatch" });
+
             }
 
             if (ModelState.IsValid)
@@ -157,18 +145,21 @@ namespace Mesa04.Controllers
                 try
                 {
                     /*
-                    _context.Update(cliente);
+                    _context.Update(tipoRegistroNacional);
                     await _context.SaveChangesAsync();
                     */
-                    await _clienteService.UpdateAsync(cliente);
-
+                    await _tipoRegistroNacionalService.UpdateAsync(tipoRegistroNacional);
                 }
+                /*
+                catch (DbUpdateConcurrencyException)
+                */
                 catch (DbUpdateConcurrencyException e)
                 {
                     /*
-                    if (!ClienteExists(cliente.Id))
+                    if (!TipoRegistroNacionalExists(tipoRegistroNacional.Id))
                     */
-                    if (cliente == null)
+                    if (tipoRegistroNacional == null)
+
                     {
                         /*
                         return NotFound();
@@ -185,11 +176,11 @@ namespace Mesa04.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(cliente);
+            return View(tipoRegistroNacional);
         }
 
 
-        // GET: Clientes/Delete/5
+        // GET: TipoRegistroNacionals/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -200,12 +191,12 @@ namespace Mesa04.Controllers
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
             /*
-            var cliente = await _context.Cliente
+            var tipoRegistroNacional = await _context.TipoRegistroNacional
                 .FirstOrDefaultAsync(m => m.Id == id);
             */
-            var cliente = await _clienteService.FindByIdAsync(id.Value); //preciso usar o "Value" pois como o argumento "id" é opcional, precisamos colocar o Value para pegar o valor caso seja informado
+            var tipoRegistroNacional = await _tipoRegistroNacionalService.FindByIdAsync(id.Value); //preciso usar o "Value" pois como o argumento "id" é opcional, precisamos colocar o Value para pegar o valor caso seja informado
 
-            if (cliente == null)
+            if (tipoRegistroNacional == null)
             {
                 /*
                 return NotFound();
@@ -213,38 +204,38 @@ namespace Mesa04.Controllers
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
 
-            return View(cliente);
+            return View(tipoRegistroNacional);
         }
 
-        // POST: Clientes/Delete/5
+        // POST: TipoRegistroNacionals/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             /*
-            var cliente = await _context.Cliente.FindAsync(id);
-            _context.Cliente.Remove(cliente);
+            var tipoRegistroNacional = await _context.TipoRegistroNacional.FindAsync(id);
+            _context.TipoRegistroNacional.Remove(tipoRegistroNacional);
             await _context.SaveChangesAsync();
             */
             try
             {
-                await _clienteService.RemoveAsync(id);
+                await _tipoRegistroNacionalService.RemoveAsync(id);
                 return RedirectToAction(nameof(Index));
             }
             catch (IntegrityException e)
             {
                 return RedirectToAction(nameof(Error), new { message = e.Message });
             }
-        }
             
+        }
+
         /*
-        private bool ClienteExists(int id)
+        private bool TipoRegistroNacionalExists(int id)
         {
-        return _context.Cliente.Any(e => e.Id == id);
+            return _context.TipoRegistroNacional.Any(e => e.Id == id);
         }
         */
 
-                
         //Metodo Error
         public IActionResult Error(string message) //metodo de erro, para personalizar na camada de serviço os erros
         {

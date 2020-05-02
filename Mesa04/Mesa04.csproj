@@ -7,6 +7,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200423225703_InitialTodosModelsEdepartamentosController.cs" />
     <Compile Remove="Migrations\20200423225703_InitialTodosModelsEdepartamentosController.Designer.cs" />
+    <Compile Remove="Migrations\20200429223330_ClasseTipoRegistoNacionalMigradaDoEnumParaModelComScafoldingDeControllerEViews.cs" />
+    <Compile Remove="Migrations\20200429223330_ClasseTipoRegistoNacionalMigradaDoEnumParaModelComScafoldingDeControllerEViews.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

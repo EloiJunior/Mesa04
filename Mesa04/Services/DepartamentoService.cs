@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;     // para usar o Task, do processamento assyncrono
 using Microsoft.EntityFrameworkCore; //para usar o ToListAsync()
 using System;                        //para usar o Not Implemented Exception
-
+using Microsoft.AspNetCore.Mvc;
 
 namespace Mesa04.Services
 {
@@ -17,24 +17,22 @@ namespace Mesa04.Services
             _context = context;
         }
 
-        /*esse bloco é de processamento Syncrono, abaixo vamos alterar para processamento Assyncrono:
-        public List<Departamento> FindAll()
-        {
-            return _context.Departamento.OrderBy(x => x.Nome).ToList(); //OrderBy = ordenar, linq(s => x.Nome) = ordenar pelo nome
-        }
-        */
-
+        //GET: Departamentos
         //vamos fazer o mesmo do bloco comentado acima, mas transformando para processamento assyncrono usando Tasks: que é um objeto que encapsula o processamento assyncrono
         public async Task<List<Departamento>> FindAllAsync()
         {
             return await _context.Departamento.OrderBy(x => x.Nome).ToListAsync(); //OrderBy = ordenar, linq(s => x.Nome) = ordenar pelo nome
         }
 
+
+        // GET: Departamentos/Details/5
         public async Task<Departamento> FindByIdAsync(int id)
         {
             return await _context.Departamento.FirstOrDefaultAsync(m => m.Id == id);
         }
-
+        // POST: Operadors/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task InsertAsync(Departamento departamento)
         {
             _context.Departamento.Add(departamento);
@@ -44,7 +42,7 @@ namespace Mesa04.Services
         //Metodo Update
         public async Task UpdateAsync(Departamento departamento)
         {
-            if (!await _context.Departamento.AnyAsync(x => x.Id == departamento.Id))
+            if (! await _context.Departamento.AnyAsync(x => x.Id == departamento.Id))
             {
                 throw new NotImplementedException();
             }

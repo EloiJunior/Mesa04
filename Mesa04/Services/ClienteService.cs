@@ -6,14 +6,13 @@ using Microsoft.EntityFrameworkCore;  //para usar o ".Include" no Metodo FindByI
 using Mesa04.Models;
 using Mesa04.Services.Exceptions; //para usar o erro personalizado no Metodo Update
 
-
 namespace Mesa04.Services
 {
-    public class OperadorService
+    public class ClienteService
     {
         private readonly Mesa04Context _context;
 
-        public OperadorService(Mesa04Context context)
+        public ClienteService(Mesa04Context context)
         {
             _context = context;
         }
@@ -24,13 +23,13 @@ namespace Mesa04.Services
         /*
         public async Task<IActionResult> Index()
         */
-        public async Task<List<Operador>> FindAllAsync()
+        public async Task<List<Cliente>> FindAllAsync()
         {                 /////////////   ////////////  
             /*
             return View(await _context.Operador.ToListAsync());
             */
 
-            return await _context.Operador.OrderBy(x => x.Nome).Include(x => x.Departamento).ToListAsync();
+            return await _context.Cliente.OrderBy(x => x.Nome).Include(x => x.TipoRegistroNacional).ToListAsync();
         }        //                        //////////////////// ////////////////////////////
 
 
@@ -39,7 +38,7 @@ namespace Mesa04.Services
         /*
         public async Task<IActionResult> Details(int? id)  
         */
-        public async Task<Operador> FindByIdAsync(int? id)
+        public async Task<Cliente> FindByIdAsync(int? id)
         {                 ////////  /////////////
                           /*
                           if (id == null)
@@ -51,8 +50,8 @@ namespace Mesa04.Services
             /*
             var operador = await _context.Operador.FirstOrDefaultAsync(m => m.Id == id);
             */
-            
-            return await _context.Operador.Include(m => m.Departamento).FirstOrDefaultAsync(m => m.Id == id);
+
+            return await _context.Cliente.Include(m => m.TipoRegistroNacional).FirstOrDefaultAsync(m => m.Id == id);
             //////                        /////////////////////////////
 
             /*
@@ -83,21 +82,21 @@ namespace Mesa04.Services
         /*
         public async Task<IActionResult> Create([Bind("Id,Nome,Email,Aniversario,SalarioBase")] Operador operador)
         */
-        public async Task InsertAsync(Operador operador)
+        public async Task InsertAsync(Cliente cliente)
         {
             /*
             if (ModelState.IsValid)
             {
             }
             */
-                _context.Add(operador);
-                await _context.SaveChangesAsync();
+            _context.Add(cliente);
+            await _context.SaveChangesAsync();
 
-                /*
-                return RedirectToAction(nameof(Index));
-                
-            return View(operador);
-            */
+            /*
+            return RedirectToAction(nameof(Index));
+
+        return View(operador);
+        */
         }
 
 
@@ -132,7 +131,7 @@ namespace Mesa04.Services
         */
 
 
-        
+
         // POST: Operadors/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -141,36 +140,36 @@ namespace Mesa04.Services
         /*
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Email,Aniversario,SalarioBase")] Operador operador)
         */
-        public async Task UpdateAsync(Operador operador)
+        public async Task UpdateAsync(Cliente cliente)
         {
             /*
             if (id != operador.Id)
             */
-            if(!_context.Operador.Any(x => x.Id == operador.Id))
+            if (!_context.Cliente.Any(x => x.Id == cliente.Id))
             {
-                 throw new NotFoundException("Id not found");
+                throw new NotFoundException("Id not found");
             }
-            
+
             /*
             if (ModelState.IsValid)
             {
             */
-                try
+            try
+            {
+                _context.Update(cliente);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                if (!ClienteExists(cliente.Id))
                 {
-                    _context.Update(operador);
-                   await _context.SaveChangesAsync();
+                    throw new NotFoundException("Id not found");
                 }
-                catch (DbUpdateConcurrencyException e)
+                else
                 {
-                    if (!OperadorExists(operador.Id))
-                    {
-                        throw new NotFoundException("Id not found");
-                    }
-                    else
-                    {
-                        throw new DbConcurrencyException(e.Message);
-                    }
+                    throw new DbConcurrencyException(e.Message);
                 }
+            }
             /*
                 return RedirectToAction(nameof(Index));
             
@@ -178,9 +177,9 @@ namespace Mesa04.Services
             
             return View(operador);
             */
-            
+
         }
-        
+
 
         /*
         // GET: Operadors/Delete/5
@@ -212,11 +211,11 @@ namespace Mesa04.Services
         {
             try
             {
-                var operador = await _context.Operador.FindAsync(id);
-                _context.Operador.Remove(operador);
+                var cliente = await _context.Cliente.FindAsync(id);
+                _context.Cliente.Remove(cliente);
                 await _context.SaveChangesAsync();
             }
-            catch(DbUpdateException e)
+            catch (DbUpdateException e)
             {
                 throw new IntegrityException(e.Message);
             }
@@ -226,12 +225,10 @@ namespace Mesa04.Services
 
         }
 
-        private bool OperadorExists(int id)
+        private bool ClienteExists(int id)
         {
-            return _context.Operador.Any(e => e.Id == id);
+            return _context.Cliente.Any(e => e.Id == id);
         }
+
     }
 }
-
-
-

@@ -42,6 +42,8 @@ namespace Mesa04
 
             services.AddScoped<DepartamentoService>();
             services.AddScoped<OperadorService>();
+            services.AddScoped<ClienteService>();
+            services.AddScoped<TipoRegistroNacionalService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

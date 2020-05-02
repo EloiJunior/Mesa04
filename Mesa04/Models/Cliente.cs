@@ -27,10 +27,13 @@ namespace Mesa04.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]  //anotation usada para configurar a data como dia, mes e ano.
         public DateTime? Aniversario { get; set; }
 
-
+        //[Required(ErrorMessage = "Name required")]                                                    //anotation que define que o campo é obrigatorio, e mensagem de erro se quiser
         public TipoRegistroNacional TipoRegistroNacional { get; set; } //associação de 1 cliente com apenas 1 TipoRegistroNacional
 
+        public int TipoRegistroNacionalId { get; set; } //foreign key, para forçar que esse campo não possa ser nulo na tabela de operador, uma vez que o tipo "int" não pode ser nulo
 
+        //[Required(ErrorMessage = "Name required")]    //anotation que define que o campo é obrigatorio, e mensagem de erro se quiser
+        //[DisplayFormat(DataFormatString = "{0:000\\.000\\.000-00}")]
         public int RegistroNacional { get; set; } //atributo basico
 
 
@@ -43,7 +46,7 @@ namespace Mesa04.Models
         }
 
         //construtor com argumento
-        public Cliente(int id, string nome, string email, DateTime? aniversario, /*TipoRegistroNacional tipoRegistroNacional,*/ int registroNacional)//Tipo tipo//
+        public Cliente(int id, string nome, string email, DateTime? aniversario, /*TipoRegistroNacional tipoRegistroNacional,*/ char registroNacional)//Tipo tipo//
         {
             Id = id;
             Nome = nome;

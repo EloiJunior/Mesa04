@@ -21,5 +21,12 @@ namespace Mesa04.Models
         public DbSet<Mesa04.Models.Cliente> Cliente { get; set; }
 
         public DbSet<Mesa04.Models.Operador> Operador { get; set; }
+
+        public DbSet<Mesa04.Models.TipoRegistroNacional> TipoRegistroNacional { get; set; }
+
+        internal Task FindAllAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

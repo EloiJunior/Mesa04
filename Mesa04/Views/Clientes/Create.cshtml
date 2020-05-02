@@ -1,10 +1,10 @@
-﻿@model Mesa04.Models.Cliente
+﻿@model Mesa04.Models.ViewModels.ClienteFormViewModel
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<h2>@ViewData["Title"]</h2>
 
 <h4>Cliente</h4>
 <hr />
@@ -13,29 +13,29 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
+                <label asp-for="Cliente.Nome" class="control-label"></label>
+                <input asp-for="Cliente.Nome" class="form-control" />
+                <span asp-validation-for="Cliente.Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label asp-for="Cliente.Email" class="control-label"></label>
+                <input asp-for="Cliente.Email" class="form-control" />
+                <span asp-validation-for="Cliente.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Aniversario" class="control-label"></label>
-                <input asp-for="Aniversario" class="form-control" />
-                <span asp-validation-for="Aniversario" class="text-danger"></span>
+                <label asp-for="Cliente.Aniversario" class="control-label"></label>
+                <input asp-for="Cliente.Aniversario" class="form-control" />
+                <span asp-validation-for="Cliente.Aniversario" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TipoRegistroNacional" class="control-label"></label>
-                <select asp-for="TipoRegistroNacional" class="form-control"></select>
-                <span asp-validation-for="TipoRegistroNacional" class="text-danger"></span>
+                <label asp-for="Cliente.TipoRegistroNacional" class="control-label"></label>
+                <select asp-for="Cliente.TipoRegistroNacionalId" asp-items="@(new SelectList(Model.TipoRegistroNacionals,"Id","Nome"))" class="form-control"></select>
+                <span asp-validation-for="Cliente.TipoRegistroNacional" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RegistroNacional" class="control-label"></label>
-                <input asp-for="RegistroNacional" class="form-control" />
-                <span asp-validation-for="RegistroNacional" class="text-danger"></span>
+                <label asp-for="Cliente.RegistroNacional" class="control-label"></label>
+                <input asp-for="Cliente.RegistroNacional" class="form-control" />
+                <span asp-validation-for="Cliente.RegistroNacional" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
