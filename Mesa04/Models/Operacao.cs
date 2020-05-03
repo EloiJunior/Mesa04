@@ -62,6 +62,11 @@ namespace Mesa04.Models
 
         public OperacaoStatus OperacaoStatus { get; set; } //associação de 1 Fechamento com 1 SaleStatus
 
+        [Required(ErrorMessage = "{0} required")]  //como opção podemos automatizar alguns strings da mensagem de erro
+        [Display(Name = "Status")]            //tag usada para personalizar como o atributo aparecerá no display, que é a tela do site
+        public int OperacaoStatusId { get; set; } //foreign Key 
+
+
         //Construtor sem argumento, precisamos criar pois o framework precisa dele
         public Operacao()
         {

@@ -8,5 +8,6 @@ namespace Mesa04.Models.ViewModels
         public ICollection<Operador> Operadores { get; set; }
         public ICollection<TipoOperacao> Tipos { get; set; }
         public ICollection<Cliente> Clientes { get; set; }
+        public ICollection<OperacaoStatus> Statuss { get; set; }
     }
 }
