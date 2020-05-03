@@ -1,38 +1,50 @@
-﻿using System.Threading.Tasks;
+﻿//using System; //excluir
+//using System.Collections.Generic; //excluir
+//using System.Linq; //excluir
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+//using Microsoft.AspNetCore.Mvc.Rendering; //excluir
 using Microsoft.EntityFrameworkCore;
 using Mesa04.Models;
-using Mesa04.Services;//inclui para usar service
-using Mesa04.Services.Exceptions;//inclui para usar o IntegrityException no DeleteConfirmed
-using Mesa04.Models.ViewModels;//inclui para usar o ErrorViewModel no metodo Error
-using System.Diagnostics; // inclui para usar o Activity no metodo Error
+using Mesa04.Services;//incluir para usar service
+using Mesa04.Services.Exceptions;//incluir para usar o IntegrityException no DeleteConfirmed
+using Mesa04.Models.ViewModels;//incluir para usar o ErrorViewModel no metodo Error
+using System.Diagnostics; // incluir para usar o Activity no metodo Error
+
 
 namespace Mesa04.Controllers
 {
-    public class TipoRegistroNacionalsController : Controller
+    public class OperacaoStatussController : Controller
     {
         /*
         private readonly Mesa04Context _context;
         */
 
-        private readonly TipoRegistroNacionalService _tipoRegistroNacionalService;
+        private readonly OperacaoStatusService _operacaoStatusService;
 
-        public TipoRegistroNacionalsController(TipoRegistroNacionalService tipoRegistroNacionalService)
+        /*
+        public OperacaoStatussController(Mesa04Context context)
+        */
+        public OperacaoStatussController(OperacaoStatusService operacaoStatusService)
         {
-            _tipoRegistroNacionalService = tipoRegistroNacionalService;
+            /*
+            _context = context;
+            */
+            _operacaoStatusService = operacaoStatusService;
         }
 
-        // GET: TipoRegistroNacionals
+        // GET: OperacaoStatuss
         public async Task<IActionResult> Index()
         {
             /*
-            return View(await _context.TipoRegistroNacional.ToListAsync());
+            return View(await _context.OperacaoStatus.ToListAsync());
             */
-            var list = await _tipoRegistroNacionalService.FindAllAsync();
+            var list = await _operacaoStatusService.FindAllAsync();
             return View(list);
+
         }
 
-        // GET: TipoRegistroNacionals/Details/5
+        // GET: OperacaoStatuss/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,56 +55,52 @@ namespace Mesa04.Controllers
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
             /*
-            var tipoRegistroNacional = await _context.TipoRegistroNacional
+            var operacaoStatus = await _context.OperacaoStatus
                 .FirstOrDefaultAsync(m => m.Id == id);
-            */
+                */
+            var operacaoStatus = await _operacaoStatusService.FindByIdAsync(id.Value);
 
-            var tipoRegistroNacional = await _tipoRegistroNacionalService.FindByIdAsync(id.Value);
-
-            if (tipoRegistroNacional == null)
+            if (operacaoStatus == null)
             {
                 /*
                 return NotFound();
                 */
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
-
             }
 
-            return View(tipoRegistroNacional);
+            return View(operacaoStatus);
         }
 
-
-        // GET: TipoRegistroNacionals/Create
+        // GET: OperacaoStatuss/Create
         public IActionResult Create()
-        
         {
             return View();
         }
 
-
-        // POST: TipoRegistroNacionals/Create
+        // POST: OperacaoStatuss/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         /*
-        public async Task<IActionResult> Create([Bind("Id,Nome")] TipoRegistroNacional tipoRegistroNacional)
+        public async Task<IActionResult> Create([Bind("Id,Nome")] OperacaoStatus operacaoStatus)
         */
-        public async Task<IActionResult> Create([Bind("Id,Nome")] TipoRegistroNacional tipoRegistroNacional)
+        public async Task<IActionResult> Create([Bind("Id,Nome")] OperacaoStatus operacaoStatus)
+
         {
             if (ModelState.IsValid)
             {
                 /*
-                _context.Add(tipoRegistroNacional);
+                _context.Add(operacaoStatus);
                 await _context.SaveChangesAsync();
                 */
-                await _tipoRegistroNacionalService.InsertAsync(tipoRegistroNacional);
+                await _operacaoStatusService.InsertAsync(operacaoStatus);
                 return RedirectToAction(nameof(Index));
             }
-            return View(tipoRegistroNacional);
+            return View(operacaoStatus);
         }
 
-        // GET: TipoRegistroNacionals/Edit/5
+        // GET: OperacaoStatuss/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -103,31 +111,32 @@ namespace Mesa04.Controllers
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
             /*
-            var tipoRegistroNacional = await _context.TipoRegistroNacional.FindAsync(id);
+            var operacaoStatus = await _context.OperacaoStatus.FindAsync(id);
             */
-            var tipoRegistroNacional = await _tipoRegistroNacionalService.FindByIdAsync(id.Value); // o id.Value é porque lá encima o argumento está como opcional
+            var operacaoStatus = await _operacaoStatusService.FindByIdAsync(id.Value); // o id.Value é porque lá encima o argumento está como opcional
 
-            if (tipoRegistroNacional == null)
+            if (operacaoStatus == null)
             {
                 /*
                 return NotFound();
                 */
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
-            return View(tipoRegistroNacional);
+            return View(operacaoStatus);
         }
 
-        // POST: TipoRegistroNacionals/Edit/5
+        // POST: OperacaoStatuss/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         /*
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome")] TipoRegistroNacional tipoRegistroNacional)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome")] OperacaoStatus operacaoStatus)
         */
-        public async Task<IActionResult> Edit(int id,TipoRegistroNacional tipoRegistroNacional)
+        public async Task<IActionResult> Edit(int id, OperacaoStatus operacaoStatus)
+
         {
-            if (id != tipoRegistroNacional.Id)
+            if (id != operacaoStatus.Id)
             {
                 /*
                 return NotFound();
@@ -140,10 +149,11 @@ namespace Mesa04.Controllers
                 try
                 {
                     /*
-                    _context.Update(tipoRegistroNacional);
+                    _context.Update(operacaoStatus);
                     await _context.SaveChangesAsync();
                     */
-                    await _tipoRegistroNacionalService.UpdateAsync(tipoRegistroNacional);
+                    await _operacaoStatusService.UpdateAsync(operacaoStatus);
+
                 }
                 /*
                 catch (DbUpdateConcurrencyException)
@@ -151,9 +161,9 @@ namespace Mesa04.Controllers
                 catch (DbUpdateConcurrencyException e)
                 {
                     /*
-                    if (!TipoRegistroNacionalExists(tipoRegistroNacional.Id))
+                    if (!OperacaoStatusExists(operacaoStatus.Id))
                     */
-                    if (tipoRegistroNacional == null)
+                    if (operacaoStatus == null)
                     {
                         /*
                         return NotFound();
@@ -170,11 +180,10 @@ namespace Mesa04.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(tipoRegistroNacional);
+            return View(operacaoStatus);
         }
 
-
-        // GET: TipoRegistroNacionals/Delete/5
+        // GET: OperacaoStatuss/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -185,12 +194,12 @@ namespace Mesa04.Controllers
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
             /*
-            var tipoRegistroNacional = await _context.TipoRegistroNacional
+            var operacaoStatus = await _context.OperacaoStatus
                 .FirstOrDefaultAsync(m => m.Id == id);
             */
-            var tipoRegistroNacional = await _tipoRegistroNacionalService.FindByIdAsync(id.Value); //preciso usar o "Value" pois como o argumento "id" é opcional, precisamos colocar o Value para pegar o valor caso seja informado
+            var operacaoStatus = await _operacaoStatusService.FindByIdAsync(id.Value); //preciso usar o "Value" pois como o argumento "id" é opcional, precisamos colocar o Value para pegar o valor caso seja informado
 
-            if (tipoRegistroNacional == null)
+            if (operacaoStatus == null)
             {
                 /*
                 return NotFound();
@@ -198,35 +207,35 @@ namespace Mesa04.Controllers
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
 
-            return View(tipoRegistroNacional);
+            return View(operacaoStatus);
         }
 
-        // POST: TipoRegistroNacionals/Delete/5
+        // POST: OperacaoStatuss/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             /*
-            var tipoRegistroNacional = await _context.TipoRegistroNacional.FindAsync(id);
-            _context.TipoRegistroNacional.Remove(tipoRegistroNacional);
+            var operacaoStatus = await _context.OperacaoStatus.FindAsync(id);
+            _context.OperacaoStatus.Remove(operacaoStatus);
             await _context.SaveChangesAsync();
             */
             try
             {
-                await _tipoRegistroNacionalService.RemoveAsync(id);
+                await _operacaoStatusService.RemoveAsync(id);
                 return RedirectToAction(nameof(Index));
             }
             catch (IntegrityException e)
             {
                 return RedirectToAction(nameof(Error), new { message = e.Message });
             }
-            
+
         }
 
         /*
-        private bool TipoRegistroNacionalExists(int id)
+        private bool OperacaoStatusExists(int id)
         {
-            return _context.TipoRegistroNacional.Any(e => e.Id == id);
+            return _context.OperacaoStatus.Any(e => e.Id == id);
         }
         */
 

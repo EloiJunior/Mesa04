@@ -2,8 +2,13 @@
 
 namespace Mesa04.Models
 {
-    public class TipoOperacao
+    public class OperacaoStatus
     {
+        /*
+        Pendente = 0,
+        Fechado = 1,
+        Cancelado = 2,
+        */
 
         public int Id { get; set; }                            //atributo basico da classe
 
@@ -17,12 +22,12 @@ namespace Mesa04.Models
 
 
         //construtor sem argumento, pois o framework precisa dele
-        public TipoOperacao()
+        public OperacaoStatus()
         {
         }
 
         //Construtor com argumento, todos os atributos com exceção das coleções
-        public TipoOperacao(int id, string nome)
+        public OperacaoStatus(int id, string nome)
         {
             Id = id;
             Nome = nome;
@@ -33,8 +38,6 @@ namespace Mesa04.Models
         {
             Operacaos.Add(operacao);
         }
-
-
 
     }
 }

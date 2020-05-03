@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;  //para usar as anotações de Formatos
 using System.ComponentModel.DataAnnotations.Schema;//para usar a tag NotMapped, que serve para não criar a coluna na tabela, vou testar ainda
-using Mesa04.Models.Enums; // para usar o SaleStatus que é um Enum
 
 namespace Mesa04.Models
 {

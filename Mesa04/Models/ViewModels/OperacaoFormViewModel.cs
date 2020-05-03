@@ -1,5 +1,4 @@
-﻿using Mesa04.Models.Enums;
-using System.Collections.Generic;  //para usar o ICollection
+﻿using System.Collections.Generic;  //para usar o ICollection
 
 namespace Mesa04.Models.ViewModels
 {

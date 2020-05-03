@@ -8,25 +8,25 @@ using Mesa04.Services.Exceptions;
 
 namespace Mesa04.Services
 {
-    public class TipoOperacaoService
+    public class OperacaoStatusService
     {
         private readonly Mesa04Context _context;
 
-        public TipoOperacaoService(Mesa04Context context)
+        public OperacaoStatusService(Mesa04Context context)
         {
             _context = context;
         }
 
         // GET: TipoOperacaos
-        public async Task<List<TipoOperacao>> FindAllAsync()
+        public async Task<List<OperacaoStatus>> FindAllAsync()
         {
-            return await _context.TipoOperacao.OrderBy(x => x.Id).ToListAsync();
+            return await _context.OperacaoStatus.OrderBy(x => x.Id).ToListAsync();
         }
 
         // GET: TipoOperacaos/Details/5
-        public async Task<TipoOperacao> FindByIdAsync(int? id)
+        public async Task<OperacaoStatus> FindByIdAsync(int? id)
         {
-            return await _context.TipoOperacao
+            return await _context.OperacaoStatus
                 .FirstOrDefaultAsync(m => m.Id == id);
         }
 
@@ -38,10 +38,10 @@ namespace Mesa04.Services
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task InsertAsync([Bind("Id,Nome")] TipoOperacao tipoOperacao)
+        public async Task InsertAsync([Bind("Id,Nome")] OperacaoStatus operacaoStatus)
         {
-                _context.TipoOperacao.Add(tipoOperacao);
-                await _context.SaveChangesAsync();
+            _context.OperacaoStatus.Add(operacaoStatus);
+            await _context.SaveChangesAsync();
         }
 
 
@@ -53,21 +53,21 @@ namespace Mesa04.Services
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task UpdateAsync([Bind("Id,Nome")] TipoOperacao tipoOperacao)
+        public async Task UpdateAsync([Bind("Id,Nome")] OperacaoStatus operacaoStatus)
         {
-            if (!await _context.TipoOperacao.AnyAsync(x => x.Id == tipoOperacao.Id))
+            if (!await _context.OperacaoStatus.AnyAsync(x => x.Id == operacaoStatus.Id))
             {
                 throw new NotFoundException("Id not found");
             }
 
             try
             {
-                _context.Update(tipoOperacao);
+                _context.Update(operacaoStatus);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException e)
             {
-                if (!TipoOperacaoExists(tipoOperacao.Id))
+                if (!OperacaoStatusExists(operacaoStatus.Id))
                 {
                     throw new NotFoundException("Id not found");
                 }
@@ -89,8 +89,8 @@ namespace Mesa04.Services
         {
             try
             {
-                var tipoOperacao = await _context.TipoOperacao.FindAsync(id);
-                _context.TipoOperacao.Remove(tipoOperacao);
+                var operacaoStatus = await _context.OperacaoStatus.FindAsync(id);
+                _context.OperacaoStatus.Remove(operacaoStatus);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException e)
@@ -101,9 +101,9 @@ namespace Mesa04.Services
         }
 
 
-        private bool TipoOperacaoExists(int id)
+        private bool OperacaoStatusExists(int id)
         {
-            return _context.TipoOperacao.Any(e => e.Id == id);
+            return _context.OperacaoStatus.Any(e => e.Id == id);
         }
 
     }

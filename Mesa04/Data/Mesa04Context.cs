@@ -26,6 +26,9 @@ namespace Mesa04.Models
 
         public DbSet<Mesa04.Models.TipoOperacao> TipoOperacao { get; set; }
 
+        public DbSet<Mesa04.Models.OperacaoStatus> OperacaoStatus { get; set; }
+
+
         internal Task FindAllAsync()
         {
             throw new NotImplementedException();
