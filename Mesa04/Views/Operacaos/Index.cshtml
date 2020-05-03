@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table table-striped table-hover">
     <thead>
         <tr>
             <th>
@@ -31,7 +31,7 @@
                 @Html.DisplayNameFor(model => model.Banco)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OperacaoStatus)
+                @Html.DisplayNameFor(model => model.Tipo)
             </th>
             <th></th>
         </tr>
@@ -58,7 +58,7 @@
                 @Html.DisplayFor(modelItem => item.Banco)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.OperacaoStatus)
+                @Html.DisplayFor(modelItem => item.Tipo)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

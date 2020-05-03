@@ -6,22 +6,41 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Mesa04.Models;
+using Mesa04.Services;
+using Mesa04.Models.ViewModels;
+using Mesa04.Services.Exceptions;
+using System.Diagnostics;
 
 namespace Mesa04.Controllers
 {
     public class OperacaosController : Controller
     {
+        /*
         private readonly Mesa04Context _context;
+        */
+        private readonly OperacaoService _operacaoService;
+        private readonly TipoOperacaoService _tipoOperacaoService;
 
+        /*
         public OperacaosController(Mesa04Context context)
         {
             _context = context;
+        }
+        */
+        public OperacaosController(OperacaoService operacaoService, TipoOperacaoService tipoOperacaoService)
+        {
+            _operacaoService = operacaoService;
+            _tipoOperacaoService = tipoOperacaoService;
         }
 
         // GET: Operacaos
         public async Task<IActionResult> Index()
         {
+            /*
             return View(await _context.Operacao.ToListAsync());
+            */
+            var list = await _operacaoService.FindAllAsync();
+            return View(list);
         }
 
         // GET: Operacaos/Details/5
@@ -29,23 +48,25 @@ namespace Mesa04.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
 
-            var operacao = await _context.Operacao
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var operacao = await _operacaoService.FindByIdAsync(id.Value);
+
             if (operacao == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
 
             return View(operacao);
         }
 
         // GET: Operacaos/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var tipos = await _tipoOperacaoService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
+            var viewModel = new OperacaoFormViewModel { Tipos = tipos };  //codigo para instanciar um novo OperadorFormViewModel já começando com a lista de departamentos acima, e chamando esse formulario de viewModel
+            return View(viewModel);                                                       //codigo que manda esse novo formulario já com a lista de departamentos criada para a View
         }
 
         // POST: Operacaos/Create
@@ -57,8 +78,7 @@ namespace Mesa04.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(operacao);
-                await _context.SaveChangesAsync();
+                await _operacaoService.InsertAsync(operacao);
                 return RedirectToAction(nameof(Index));
             }
             return View(operacao);
@@ -69,15 +89,20 @@ namespace Mesa04.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
 
-            var operacao = await _context.Operacao.FindAsync(id);
+            var operacao = await _operacaoService.FindByIdAsync(id.Value);
+
             if (operacao == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
-            return View(operacao);
+
+            List<TipoOperacao> tipos = await _tipoOperacaoService.FindAllAsync();
+            OperacaoFormViewModel viewModel = new OperacaoFormViewModel { Operacao = operacao, Tipos = tipos };
+
+            return View(viewModel);
         }
 
         // POST: Operacaos/Edit/5
@@ -85,29 +110,28 @@ namespace Mesa04.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Data,Valor,Taxa,Despesa,Fluxo,Banco,OperacaoStatus")] Operacao operacao)
+        public async Task<IActionResult> Edit(int id, /*[Bind("Id,Data,Valor,Taxa,Despesa,Fluxo,Banco,OperacaoStatus")]*/ Operacao operacao)
         {
             if (id != operacao.Id)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id mismatch" });
             }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(operacao);
-                    await _context.SaveChangesAsync();
+                    await _operacaoService.UpdateAsync(operacao);
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException e)
                 {
-                    if (!OperacaoExists(operacao.Id))
+                    if(operacao == null)
                     {
-                        return NotFound();
+                        return RedirectToAction(nameof(Error), new { message = "Id not found" });
                     }
                     else
                     {
-                        throw;
+                        return RedirectToAction(nameof(Error), new { message = e.Message });
                     }
                 }
                 return RedirectToAction(nameof(Index));
@@ -120,14 +144,13 @@ namespace Mesa04.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
+            var operacao = await _operacaoService.FindByIdAsync(id.Value); //preciso usar o "Value" pois como o argumento "id" é opcional, precisamos colocar o Value para pegar o valor caso seja informado
 
-            var operacao = await _context.Operacao
-                .FirstOrDefaultAsync(m => m.Id == id);
             if (operacao == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
 
             return View(operacao);
@@ -138,15 +161,29 @@ namespace Mesa04.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var operacao = await _context.Operacao.FindAsync(id);
-            _context.Operacao.Remove(operacao);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _operacaoService.RemoveAsync(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (IntegrityException e)
+            {
+                return RedirectToAction(nameof(Error), new { message = e.Message });
+
+            }
         }
 
-        private bool OperacaoExists(int id)
+
+        //Metodo: Error
+        public IActionResult Error(string message) //metodo de erro, para personalizar na camada de serviço os erros
         {
-            return _context.Operacao.Any(e => e.Id == id);
+            var viewModel = new ErrorViewModel
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+            return View(viewModel);
         }
+
     }
 }

@@ -34,7 +34,6 @@ namespace Mesa04.Controllers
             return View(await _context.Cliente.ToListAsync());
             */
             var list = await _clienteService.FindAllAsync();
-            
             return View(list);
         }
 
@@ -90,8 +89,8 @@ namespace Mesa04.Controllers
 
         public async Task<IActionResult> Create([Bind("Id,Nome,Email,Aniversario,TipoRegistroNacionalId,RegistroNacional")] Cliente cliente)
         {
-           // if (ModelState.IsValid)
-            //{
+            if (ModelState.IsValid)
+            {
                 /*
                 _context.Add(cliente);
                 await _context.SaveChangesAsync();
@@ -99,8 +98,8 @@ namespace Mesa04.Controllers
                 await _clienteService.InsertAsync(cliente);
                 return RedirectToAction(nameof(Index));
 
-           // }
-             //return View(cliente);
+            }
+            return View(cliente);
         }
 
 
