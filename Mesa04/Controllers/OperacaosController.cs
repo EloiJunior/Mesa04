@@ -20,17 +20,20 @@ namespace Mesa04.Controllers
         */
         private readonly OperacaoService _operacaoService;
         private readonly TipoOperacaoService _tipoOperacaoService;
-
+        private readonly OperadorService _operadorService;
+        private readonly ClienteService _clienteService;
         /*
         public OperacaosController(Mesa04Context context)
         {
             _context = context;
         }
         */
-        public OperacaosController(OperacaoService operacaoService, TipoOperacaoService tipoOperacaoService)
+        public OperacaosController(OperacaoService operacaoService, TipoOperacaoService tipoOperacaoService, OperadorService operadorService, ClienteService clienteService)
         {
             _operacaoService = operacaoService;
             _tipoOperacaoService = tipoOperacaoService;
+            _operadorService = operadorService;
+            _clienteService = clienteService;
         }
 
         // GET: Operacaos
@@ -65,7 +68,9 @@ namespace Mesa04.Controllers
         public async Task<IActionResult> Create()
         {
             var tipos = await _tipoOperacaoService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
-            var viewModel = new OperacaoFormViewModel { Tipos = tipos };  //codigo para instanciar um novo OperadorFormViewModel já começando com a lista de departamentos acima, e chamando esse formulario de viewModel
+            var operadores = await _operadorService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
+            var clientes = await _clienteService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
+            var viewModel = new OperacaoFormViewModel { Tipos = tipos, Operadores = operadores, Clientes = clientes };  //codigo para instanciar um novo OperadorFormViewModel já começando com a lista de departamentos acima, e chamando esse formulario de viewModel
             return View(viewModel);                                                       //codigo que manda esse novo formulario já com a lista de departamentos criada para a View
         }
 
