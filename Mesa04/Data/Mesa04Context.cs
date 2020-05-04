@@ -28,11 +28,14 @@ namespace Mesa04.Models
 
         public DbSet<Mesa04.Models.OperacaoStatus> OperacaoStatus { get; set; }
 
+        public DbSet<Mesa04.Models.BancoMe> BancoMe { get; set; }
 
         internal Task FindAllAsync()
         {
             throw new NotImplementedException();
         }
+
+
 
     }
 }

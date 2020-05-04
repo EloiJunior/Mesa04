@@ -4,33 +4,22 @@ using Mesa04.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Mesa04.Migrations
 {
     [DbContext(typeof(Mesa04Context))]
-    partial class Mesa04ContextModelSnapshot : ModelSnapshot
+    [Migration("20200503225420_CriandoAtributoFluxoMeNaClasseOperacao")]
+    partial class CriandoAtributoFluxoMeNaClasseOperacao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Mesa04.Models.BancoMe", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Nome");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BancoMe");
-                });
 
             modelBuilder.Entity("Mesa04.Models.Cliente", b =>
                 {
@@ -78,7 +67,8 @@ namespace Mesa04.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BancoMeId");
+                    b.Property<string>("Banco")
+                        .IsRequired();
 
                     b.Property<int>("ClienteId");
 
@@ -101,8 +91,6 @@ namespace Mesa04.Migrations
                     b.Property<double>("Valor");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BancoMeId");
 
                     b.HasIndex("ClienteId");
 
@@ -190,11 +178,6 @@ namespace Mesa04.Migrations
 
             modelBuilder.Entity("Mesa04.Models.Operacao", b =>
                 {
-                    b.HasOne("Mesa04.Models.BancoMe", "BancoMe")
-                        .WithMany("Operacaos")
-                        .HasForeignKey("BancoMeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("Mesa04.Models.Cliente")
                         .WithMany("Operacoes")
                         .HasForeignKey("ClienteId")

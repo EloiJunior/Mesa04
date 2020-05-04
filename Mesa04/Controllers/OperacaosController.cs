@@ -79,7 +79,7 @@ namespace Mesa04.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Data,Valor,Taxa,Despesa,Fluxo,Banco,OperacaoStatus")] Operacao operacao)
+        public async Task<IActionResult> Create([Bind("Id,Data,Valor,Taxa,Despesa,FluxoMn,FluxoMe,Banco,OperacaoStatus")] Operacao operacao)
         {
             if (ModelState.IsValid)
             {
@@ -115,7 +115,7 @@ namespace Mesa04.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, /*[Bind("Id,Data,Valor,Taxa,Despesa,Fluxo,Banco,OperacaoStatus")]*/ Operacao operacao)
+        public async Task<IActionResult> Edit(int id, /*[Bind("Id,Data,Valor,Taxa,Despesa,FluxoMn,FluxoMe,Banco,OperacaoStatus")]*/ Operacao operacao)
         {
             if (id != operacao.Id)
             {
