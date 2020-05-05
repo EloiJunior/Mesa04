@@ -22,18 +22,22 @@ namespace Mesa04.Controllers
         private readonly TipoOperacaoService _tipoOperacaoService;
         private readonly OperadorService _operadorService;
         private readonly ClienteService _clienteService;
+        private readonly BancoMeService _bancoMeService;
+        private readonly OperacaoStatusService _operacaoStatusService;
         /*
         public OperacaosController(Mesa04Context context)
         {
             _context = context;
         }
         */
-        public OperacaosController(OperacaoService operacaoService, TipoOperacaoService tipoOperacaoService, OperadorService operadorService, ClienteService clienteService)
+        public OperacaosController(OperacaoService operacaoService, TipoOperacaoService tipoOperacaoService, OperadorService operadorService, ClienteService clienteService, BancoMeService bancoMeService, OperacaoStatusService operacaoStatusService)
         {
             _operacaoService = operacaoService;
             _tipoOperacaoService = tipoOperacaoService;
             _operadorService = operadorService;
             _clienteService = clienteService;
+            _bancoMeService = bancoMeService;
+            _operacaoStatusService = operacaoStatusService;
         }
 
         // GET: Operacaos
@@ -70,7 +74,9 @@ namespace Mesa04.Controllers
             var tipos = await _tipoOperacaoService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
             var operadores = await _operadorService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
             var clientes = await _clienteService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
-            var viewModel = new OperacaoFormViewModel { Tipos = tipos, Operadores = operadores, Clientes = clientes };  //codigo para instanciar um novo OperadorFormViewModel já começando com a lista de departamentos acima, e chamando esse formulario de viewModel
+            var bancoMes = await _bancoMeService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
+            var operacaostatuss = await _operacaoStatusService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
+            var viewModel = new OperacaoFormViewModel { Tipos = tipos, Operadores = operadores, Clientes = clientes, BancoMes = bancoMes, OperacaoStatuss = operacaostatuss };  //codigo para instanciar um novo OperadorFormViewModel já começando com a lista de departamentos acima, e chamando esse formulario de viewModel
             return View(viewModel);                                                       //codigo que manda esse novo formulario já com a lista de departamentos criada para a View
         }
 
@@ -79,7 +85,7 @@ namespace Mesa04.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Data,Valor,Taxa,Despesa,FluxoMn,FluxoMe,Banco,OperacaoStatus")] Operacao operacao)
+        public async Task<IActionResult> Create([Bind("Id,TipoOperacaoId,OperadorId,Data,ClienteId,Valor,Taxa,Despesa,FluxoMn,FluxoMe,BancoMeId,OperacaoStatusId")] Operacao operacao)
         {
             if (ModelState.IsValid)
             {
@@ -115,7 +121,7 @@ namespace Mesa04.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, /*[Bind("Id,Data,Valor,Taxa,Despesa,FluxoMn,FluxoMe,Banco,OperacaoStatus")]*/ Operacao operacao)
+        public async Task<IActionResult> Edit(int id, /*[Bind("Id,Data,Valor,Taxa,Despesa,FluxoMn,FluxoMe,BancoMe,OperacaoStatus")]*/ Operacao operacao)
         {
             if (id != operacao.Id)
             {

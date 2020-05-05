@@ -25,7 +25,8 @@ namespace Mesa04.Controllers
         // GET: TipoOperacaos
         public async Task<IActionResult> Index()
         {
-            return View(await _tipoOperacaoService.FindAllAsync());
+            var list = await _tipoOperacaoService.FindAllAsync();
+            return View(list);
         }
 
         // GET: TipoOperacaos/Details/5

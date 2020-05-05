@@ -44,7 +44,7 @@ namespace Mesa04.Services
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task InsertAsync(/*[Bind("Id,Data,Valor,Taxa,Despesa,FluxoMn,FluxoMe,Banco,OperacaoStatus")]*/ Operacao operacao)
+        public async Task InsertAsync(/*[Bind("Id,Data,Valor,Taxa,Despesa,FluxoMn,FluxoMe,BancoMe,OperacaoStatus")]*/ Operacao operacao)
         {
                 _context.Add(operacao);
                 await _context.SaveChangesAsync();
@@ -56,7 +56,7 @@ namespace Mesa04.Services
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task UpdateAsync(/*int id, [Bind("Id,Data,Valor,Taxa,Despesa,FluxoMn,FluxoMe, Banco,OperacaoStatus")]*/ Operacao operacao)
+        public async Task UpdateAsync(/*int id, [Bind("Id,Data,Valor,Taxa,Despesa,FluxoMn,FluxoMe,BancoMe,OperacaoStatus")]*/ Operacao operacao)
         {
             if (!_context.Operacao.Any(x => x.Id == operacao.Id))
             {

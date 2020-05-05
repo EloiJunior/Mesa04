@@ -59,12 +59,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Operacao.BancoMe" class="control-label"></label>
-                <input asp-for="Operacao.BancoMe" class="form-control" />
+                <select asp-for="Operacao.BancoMeId" asp-items="@(new SelectList(Model.BancoMes,"Id","Nome"))"class="form-control"></select>
                 <span asp-validation-for="Operacao.BancoMe" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Operacao.OperacaoStatus" class="control-label"></label>
-                <select asp-for="Operacao.OperacaoStatus" asp-items="@(new SelectList(Model.Clientes,"Id","Nome"))" class="form-control"></select>
+                <select asp-for="Operacao.OperacaoStatusId" asp-items="@(new SelectList(Model.OperacaoStatuss,"Id","Nome"))" class="form-control"></select>
                 <span asp-validation-for="Operacao.OperacaoStatus" class="text-danger"></span>
             </div>
 
