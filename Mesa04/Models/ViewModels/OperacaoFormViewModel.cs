@@ -6,7 +6,7 @@ namespace Mesa04.Models.ViewModels
     {
         public Operacao Operacao { get; set; }
         public ICollection<Operador> Operadores { get; set; }
-        public ICollection<TipoOperacao> Tipos { get; set; }
+        public ICollection<TipoOperacao> TipoOperacaos { get; set; }
         public ICollection<Cliente> Clientes { get; set; }
         public ICollection<OperacaoStatus> OperacaoStatuss { get; set; }
         public ICollection<BancoMe> BancoMes { get; set; }

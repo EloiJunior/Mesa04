@@ -71,12 +71,12 @@ namespace Mesa04.Controllers
         // GET: Operacaos/Create
         public async Task<IActionResult> Create()
         {
-            var tipos = await _tipoOperacaoService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
+            var tipoOperacaos = await _tipoOperacaoService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
             var operadores = await _operadorService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
             var clientes = await _clienteService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
             var bancoMes = await _bancoMeService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
-            var operacaostatuss = await _operacaoStatusService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
-            var viewModel = new OperacaoFormViewModel { Tipos = tipos, Operadores = operadores, Clientes = clientes, BancoMes = bancoMes, OperacaoStatuss = operacaostatuss };  //codigo para instanciar um novo OperadorFormViewModel já começando com a lista de departamentos acima, e chamando esse formulario de viewModel
+            var operacaoStatuss = await _operacaoStatusService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
+            var viewModel = new OperacaoFormViewModel { TipoOperacaos = tipoOperacaos, Operadores = operadores, Clientes = clientes, BancoMes = bancoMes, OperacaoStatuss = operacaoStatuss };  //codigo para instanciar um novo OperadorFormViewModel já começando com a lista de departamentos acima, e chamando esse formulario de viewModel
             return View(viewModel);                                                       //codigo que manda esse novo formulario já com a lista de departamentos criada para a View
         }
 
@@ -85,14 +85,14 @@ namespace Mesa04.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,TipoOperacaoId,OperadorId,Data,ClienteId,Valor,Taxa,Despesa,FluxoMn,FluxoMe,BancoMeId,OperacaoStatusId")] Operacao operacao)
+        public async Task<IActionResult> Create(/*[Bind("Id,TipoOperacaoId,OperadorId,Data,ClienteId,Valor,Taxa,Despesa,FluxoMn,FluxoMe,BancoMeId,OperacaoStatusId")]*/ Operacao operacao)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 await _operacaoService.InsertAsync(operacao);
                 return RedirectToAction(nameof(Index));
-            }
-            return View(operacao);
+            //}
+            //return View(operacao);
         }
 
         // GET: Operacaos/Edit/5
@@ -110,8 +110,8 @@ namespace Mesa04.Controllers
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
 
-            List<TipoOperacao> tipos = await _tipoOperacaoService.FindAllAsync();
-            OperacaoFormViewModel viewModel = new OperacaoFormViewModel { Operacao = operacao, Tipos = tipos };
+            List<TipoOperacao> tipoOperacaos = await _tipoOperacaoService.FindAllAsync();
+            OperacaoFormViewModel viewModel = new OperacaoFormViewModel { Operacao = operacao, TipoOperacaos = tipoOperacaos };
 
             return View(viewModel);
         }

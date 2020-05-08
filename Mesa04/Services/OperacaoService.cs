@@ -19,16 +19,19 @@ namespace Mesa04.Services
             _context = context;
         }
 
-        // GET: Operacaos
+        // GET: Operacaos //
         public async Task<List<Operacao>> FindAllAsync()
         {
-            return await _context.Operacao.ToListAsync();
+            return await _context.Operacao
+                .Include(x => x.BancoMe)
+                //.Include(x => x.Cliente)
+                .ToListAsync();
         }
 
         // GET: Operacaos/Details/5
         public async Task<Operacao> FindByIdAsync(int? id)
         {
-            return await _context.Operacao.Include(m => m.Tipo).FirstOrDefaultAsync(m => m.Id == id);
+            return await _context.Operacao.Include(m => m.TipoOperacao).FirstOrDefaultAsync(m => m.Id == id);
         }
 
         /*

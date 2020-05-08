@@ -10,7 +10,7 @@ namespace Mesa04.Models
         public int Id { get; set; }            //atributo basico
 
         [NotMapped]
-        public TipoOperacao Tipo { get; set; }       //atributo basico //associação de 1 fechamento para 1 Tipo
+        public TipoOperacao TipoOperacao { get; set; }       //atributo basico //associação de 1 fechamento para 1 Tipo
 
         
         [Required(ErrorMessage = "{0} required")]  //como opção podemos automatizar alguns strings da mensagem de erro
