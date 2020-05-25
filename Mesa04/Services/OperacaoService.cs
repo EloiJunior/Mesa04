@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Mesa04.Models;
 using Mesa04.Services.Exceptions;
+using Mesa04.Models.ViewModels;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Mesa04.Services
 {
@@ -19,13 +21,10 @@ namespace Mesa04.Services
             _context = context;
         }
 
-        // GET: Operacaos //
+        // GET: Operacaos ////.Include(x => x.Cliente)
         public async Task<List<Operacao>> FindAllAsync()
         {
-            return await _context.Operacao
-                .Include(x => x.BancoMe)
-                //.Include(x => x.Cliente)
-                .ToListAsync();
+            return await _context.Operacao.Include(x => x.BancoMe).Include(x => x.Cliente).ToListAsync();
         }
 
         // GET: Operacaos/Details/5

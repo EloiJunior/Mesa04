@@ -31,7 +31,7 @@ namespace Mesa04.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]  //anotation usada para configurar a data como dia, mes e ano.
         public DateTime Data { get; set; }     //atributo basico
 
-        [NotMapped]
+        //[NotMapped]
         public Cliente Cliente { get; set; } //associação de 1 Fechamento para 1 Cliente
 
         
@@ -42,6 +42,7 @@ namespace Mesa04.Models
 
         [Required(ErrorMessage = "{0} required")]  //como opção podemos automatizar alguns strings da mensagem de erro
         [DisplayFormat(DataFormatString = "{0:F2}")]
+        //[DisplayFormat(DataFormatString = "{0:C2}")]
         public double Valor { get; set; }      //atributo basico
 
         [Required(ErrorMessage = "{0} required")]  //como opção podemos automatizar alguns strings da mensagem de erro
