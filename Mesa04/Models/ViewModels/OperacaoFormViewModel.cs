@@ -10,5 +10,6 @@ namespace Mesa04.Models.ViewModels
         public ICollection<Cliente> Clientes { get; set; }
         public ICollection<OperacaoStatus> OperacaoStatuss { get; set; }
         public ICollection<BancoMe> BancoMes { get; set; }
+        public ICollection<Me> Mes { get; set; }
     }
 }

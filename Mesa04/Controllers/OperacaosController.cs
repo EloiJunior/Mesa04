@@ -25,13 +25,14 @@ namespace Mesa04.Controllers
         private readonly ClienteService _clienteService;
         private readonly BancoMeService _bancoMeService;
         private readonly OperacaoStatusService _operacaoStatusService;
+        private readonly MeService _meService;
         /*
         public OperacaosController(Mesa04Context context)
         {
             _context = context;
         }
         */
-        public OperacaosController(OperacaoService operacaoService, TipoOperacaoService tipoOperacaoService, OperadorService operadorService, ClienteService clienteService, BancoMeService bancoMeService, OperacaoStatusService operacaoStatusService)
+        public OperacaosController(OperacaoService operacaoService, TipoOperacaoService tipoOperacaoService, OperadorService operadorService, ClienteService clienteService, BancoMeService bancoMeService, OperacaoStatusService operacaoStatusService, MeService meService)
         {
             _operacaoService = operacaoService;
             _tipoOperacaoService = tipoOperacaoService;
@@ -39,6 +40,7 @@ namespace Mesa04.Controllers
             _clienteService = clienteService;
             _bancoMeService = bancoMeService;
             _operacaoStatusService = operacaoStatusService;
+            _meService = meService;
         }
 
         // GET: Operacaos
@@ -77,7 +79,8 @@ namespace Mesa04.Controllers
             var clientes = await _clienteService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
             var bancoMes = await _bancoMeService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
             var operacaoStatuss = await _operacaoStatusService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
-            var viewModel = new OperacaoFormViewModel { TipoOperacaos = tipoOperacaos, Operadores = operadores, Clientes = clientes, BancoMes = bancoMes, OperacaoStatuss = operacaoStatuss };  //codigo para instanciar um novo OperadorFormViewModel já começando com a lista de departamentos acima, e chamando esse formulario de viewModel
+            var mes = await _meService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
+            var viewModel = new OperacaoFormViewModel { TipoOperacaos = tipoOperacaos, Operadores = operadores, Clientes = clientes, BancoMes = bancoMes, OperacaoStatuss = operacaoStatuss, Mes = mes };  //codigo para instanciar um novo OperadorFormViewModel já começando com a lista de departamentos acima, e chamando esse formulario de viewModel
             return View(viewModel);                                                       //codigo que manda esse novo formulario já com a lista de departamentos criada para a View
         }
 

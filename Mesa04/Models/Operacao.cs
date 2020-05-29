@@ -74,6 +74,13 @@ namespace Mesa04.Models
         [Display(Name = "Status")]            //tag usada para personalizar como o atributo aparecerá no display, que é a tela do site
         public int OperacaoStatusId { get; set; } //foreign Key 
 
+        [Required(ErrorMessage = "{0} required")]   //como opção podemos automatizar alguns strings da mensagem de erro
+        public Me Me { get; set; }      //atributo basico// associaçao de 1 operacao com 1 Me
+
+        [Required(ErrorMessage = "{0} required")]  //como opção podemos automatizar alguns strings da mensagem de erro
+        [Display(Name = "Me")]            //tag usada para personalizar como o atributo aparecerá no display, que é a tela do site
+        public int MeId { get; set; } //foreign Key 
+
 
         //Construtor sem argumento, precisamos criar pois o framework precisa dele
         public Operacao()

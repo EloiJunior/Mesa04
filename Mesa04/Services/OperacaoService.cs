@@ -24,13 +24,13 @@ namespace Mesa04.Services
         // GET: Operacaos ////.Include(x => x.Cliente)
         public async Task<List<Operacao>> FindAllAsync()
         {
-            return await _context.Operacao.Include(x => x.BancoMe).Include(x => x.Cliente).ToListAsync();
+            return await _context.Operacao.Include(x => x.BancoMe).Include(x => x.Cliente).Include(x => x.Me).ToListAsync();
         }
 
         // GET: Operacaos/Details/5
         public async Task<Operacao> FindByIdAsync(int? id)
         {
-            return await _context.Operacao.Include(m => m.TipoOperacao).FirstOrDefaultAsync(m => m.Id == id);
+            return await _context.Operacao.FirstOrDefaultAsync(m => m.Id == id);
         }
 
         /*
