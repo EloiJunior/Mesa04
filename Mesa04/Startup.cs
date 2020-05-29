@@ -48,6 +48,7 @@ namespace Mesa04
             services.AddScoped<OperacaoStatusService>();
             services.AddScoped<OperacaoService>();
             services.AddScoped<BancoMeService>();
+            services.AddScoped<MeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

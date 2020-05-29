@@ -30,10 +30,13 @@ namespace Mesa04.Models
 
         public DbSet<Mesa04.Models.BancoMe> BancoMe { get; set; }
 
+        public DbSet<Mesa04.Models.Me> Me { get; set; }
+
         internal Task FindAllAsync()
         {
             throw new NotImplementedException();
         }
+
 
 
 
