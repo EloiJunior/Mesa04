@@ -18,6 +18,12 @@
             @Html.DisplayFor(model => model.Data)
         </dd>
         <dt>
+            @Html.DisplayNameFor(model => model.Me)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Me.Abreviacao)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.Valor)
         </dt>
         <dd>
@@ -51,13 +57,13 @@
             @Html.DisplayNameFor(model => model.BancoMe)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.BancoMe)
+            @Html.DisplayFor(model => model.BancoMe.Nome)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.OperacaoStatus)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.OperacaoStatus)
+            @Html.DisplayFor(model => model.OperacaoStatus.Nome)
         </dd>
     </dl>
     

@@ -114,10 +114,17 @@ namespace Mesa04.Controllers
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
 
-            List<TipoOperacao> tipoOperacaos = await _tipoOperacaoService.FindAllAsync();
-            OperacaoFormViewModel viewModel = new OperacaoFormViewModel { Operacao = operacao, TipoOperacaos = tipoOperacaos };
+            List<TipoOperacao> tipoOperacaos= await _tipoOperacaoService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
+            List<Operador> operadores = await _operadorService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
+            List<Cliente> clientes = await _clienteService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
+            List<BancoMe> bancoMes = await _bancoMeService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
+            List<OperacaoStatus> operacaoStatuss = await _operacaoStatusService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
+            List<Me> mes = await _meService.FindAllAsync();                //codigo para chamar uma lista de departamentos do DepartamentoService, e guardar essa lista na variavel departamentos
+            OperacaoFormViewModel viewModel = new OperacaoFormViewModel { Operacao = operacao, TipoOperacaos = tipoOperacaos, Operadores = operadores, Clientes = clientes, BancoMes = bancoMes, OperacaoStatuss = operacaoStatuss, Mes = mes };  //codigo para instanciar um novo OperadorFormViewModel já começando com a lista de departamentos acima, e chamando esse formulario de viewModel
+            return View(viewModel);                                                       //codigo que manda esse novo formulario já com a lista de departamentos criada para a View
 
-            return View(viewModel);
+
+
         }
 
         // POST: Operacaos/Edit/5

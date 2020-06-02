@@ -30,7 +30,7 @@ namespace Mesa04.Services
         // GET: Operacaos/Details/5
         public async Task<Operacao> FindByIdAsync(int? id)
         {
-            return await _context.Operacao.FirstOrDefaultAsync(m => m.Id == id);
+            return await _context.Operacao.Include(m => m.BancoMe).Include(m => m.OperacaoStatus).Include(m => m.Me).FirstOrDefaultAsync(m => m.Id == id);
         }
 
         /*
@@ -58,7 +58,7 @@ namespace Mesa04.Services
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task UpdateAsync(/*int id, [Bind("Id,Data,Valor,Taxa,Despesa,FluxoMn,FluxoMe,BancoMe,OperacaoStatus")]*/ Operacao operacao)
+        public async Task UpdateAsync(Operacao operacao)
         {
             if (!_context.Operacao.Any(x => x.Id == operacao.Id))
             {
