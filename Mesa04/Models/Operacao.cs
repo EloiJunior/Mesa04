@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;  //para usar as anotações de Formatos
 using System.ComponentModel.DataAnnotations.Schema;//para usar a tag NotMapped, que serve para não criar a coluna na tabela, vou testar ainda
+using System.Data;
+
 
 namespace Mesa04.Models
 {
@@ -26,7 +28,7 @@ namespace Mesa04.Models
         [Display(Name = "Operador")]            //tag usada para personalizar como o atributo aparecerá no display, que é a tela do site
         public int OperadorId { get; set; }  //foreign Key
         
-
+       
         [DataType(DataType.Date)]                             // anotation usada para personalizar como aparecerá os dados na tela
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]  //anotation usada para configurar a data como dia, mes e ano.
         public DateTime Data { get; set; }     //atributo basico
@@ -46,7 +48,8 @@ namespace Mesa04.Models
         public double Valor { get; set; }      //atributo basico
 
         [Required(ErrorMessage = "{0} required")]  //como opção podemos automatizar alguns strings da mensagem de erro
-        [DisplayFormat(DataFormatString = "{0:F2}")]
+        //[DisplayFormat(DataFormatString = "{0:F2}")]
+        //[DisplayFormat(DataFormatString = "{0:C2}")]
         public double Taxa { get; set; }       //atributo basico
 
         [Required(ErrorMessage = "{0} required")]  //como opção podemos automatizar alguns strings da mensagem de erro

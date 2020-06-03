@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;  //para usar o ICollection
+﻿using System;
+using System.Collections.Generic;  //para usar o ICollection
+using System.Data;
+using System.Globalization;
+
 
 namespace Mesa04.Models.ViewModels
 {
@@ -12,4 +16,5 @@ namespace Mesa04.Models.ViewModels
         public ICollection<BancoMe> BancoMes { get; set; }
         public ICollection<Me> Mes { get; set; }
     }
+    //public static DateTime Now { get; }
 }
