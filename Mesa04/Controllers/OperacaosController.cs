@@ -53,6 +53,19 @@ namespace Mesa04.Controllers
             return View(list);
         }
 
+        //Metodo Simple Search
+        public async Task<IActionResult> SimpleSearch()
+        {
+            return View();
+        }
+
+
+        //Metodo Grouping Serch
+        public async Task<IActionResult> GroupingSearch()
+        {
+            return View();
+        }
+
         // GET: Operacaos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -206,6 +219,7 @@ namespace Mesa04.Controllers
             };
             return View(viewModel);
         }
+
 
     }
 }
