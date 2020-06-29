@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Mesa04.Models;
 using Mesa04.Services.Exceptions;
-using Mesa04.Models.ViewModels;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+
+
 
 namespace Mesa04.Services
 {
@@ -31,6 +30,25 @@ namespace Mesa04.Services
         public async Task<Operacao> FindByIdAsync(int? id)
         {
             return await _context.Operacao.Include(m => m.BancoMe).Include(m => m.OperacaoStatus).Include(m => m.Me).FirstOrDefaultAsync(m => m.Id == id);
+        }
+
+        //GET: Operacao/SimpleSearch
+        public async Task<List<Operacao>> FindByDateAsync(DateTime? minDate, DateTime? maxDate)
+        {
+            var result = from obj in _context.Operacao select obj; //foi criada uma variavel, pois vamos transformar um resultado DBset que não podemos manipular para um resultado Iqueryble que é a variavel 
+
+            if (minDate.HasValue)
+            {
+                result = result.Where(x => x.Data >= minDate.Value);//result recebe x tal que x.Data é maior ou igual o minDate informado
+            }
+
+            if (maxDate.HasValue)
+            {
+                result = result.Where(x => x.Data <= maxDate.Value);//result recebe x tal que x.Data é menor ou igual o maxDate informado
+            }
+
+            return await result.Include(x => x.Operador).Include(x => x.Operador.Departamento).OrderByDescending(x => x.Data).ToListAsync();
+
         }
 
         /*
