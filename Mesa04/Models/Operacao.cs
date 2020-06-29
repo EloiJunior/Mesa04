@@ -64,6 +64,9 @@ namespace Mesa04.Models
         [DisplayFormat(DataFormatString = "{0:F0}")]
         public int FluxoMe { get; set; }         //atributo basico
 
+        [Required(ErrorMessage = "{0} required")]  //como opção podemos automatizar alguns strings da mensagem de erro
+        public double TaxaReferencia { get; set; }         //atributo basico
+
         //[Required(ErrorMessage = "{0} required")]   //como opção podemos automatizar alguns strings da mensagem de erro
         public BancoMe BancoMe { get; set; }      //atributo basico// associaçao de 1 operacao com 1 BancoMe
 
@@ -71,6 +74,7 @@ namespace Mesa04.Models
         [Display(Name = "BancoMe")]            //tag usada para personalizar como o atributo aparecerá no display, que é a tela do site
         public int BancoMeId { get; set; } //foreign Key 
 
+        [Display(Name = "Status")]            //tag usada para personalizar como o atributo aparecerá no display, que é a tela do site
         public OperacaoStatus OperacaoStatus { get; set; } //associação de 1 Fechamento com 1 SaleStatus
 
         //[Required(ErrorMessage = "{0} required")]  //como opção podemos automatizar alguns strings da mensagem de erro
@@ -91,7 +95,7 @@ namespace Mesa04.Models
         }
 
         //Construtor com argumento
-        public Operacao(int id, /*Tipo tipo,*/ /*Operador operador,*/ DateTime data, /*Cliente cliente,*/ double valor, double taxa, double despesa, int fluxoMn, int fluxoMe /*, BancoMe banco, SaleStatus status*/)
+        public Operacao(int id, /*Tipo tipo,*/ /*Operador operador,*/ DateTime data, /*Cliente cliente,*/ double valor, double taxa, double despesa, int fluxoMn, int fluxoMe, double taxaReferencia /*, BancoMe banco, SaleStatus status*/)
         {
             Id = id;
             //Tipo = tipo;
@@ -103,6 +107,7 @@ namespace Mesa04.Models
             Despesa = despesa;
             FluxoMn = fluxoMn;
             FluxoMe = fluxoMe;
+            TaxaReferencia = taxaReferencia;
             //BancoMe = bancoMe;
             //Status = status;
         }

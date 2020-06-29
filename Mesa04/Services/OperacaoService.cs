@@ -24,7 +24,7 @@ namespace Mesa04.Services
         // GET: Operacaos ////.Include(x => x.Cliente)
         public async Task<List<Operacao>> FindAllAsync()
         {
-            return await _context.Operacao.Include(x => x.BancoMe).Include(x => x.Cliente).Include(x => x.Me).ToListAsync();
+            return await _context.Operacao.Include(x => x.BancoMe).Include(x => x.Cliente).Include(x => x.Me).Include(x => x.OperacaoStatus).ToListAsync();
         }
 
         // GET: Operacaos/Details/5
