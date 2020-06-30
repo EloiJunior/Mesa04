@@ -48,7 +48,7 @@ namespace Mesa04.Models
         public double Valor { get; set; }      //atributo basico
 
         [Required(ErrorMessage = "{0} required")]  //como opção podemos automatizar alguns strings da mensagem de erro
-        //[DisplayFormat(DataFormatString = "{0:F2}")]
+        [DisplayFormat(DataFormatString = "{0:F4}")]
         //[DisplayFormat(DataFormatString = "{0:C2}")]
         public double Taxa { get; set; }       //atributo basico
 
@@ -65,6 +65,7 @@ namespace Mesa04.Models
         public int FluxoMe { get; set; }         //atributo basico
 
         [Required(ErrorMessage = "{0} required")]  //como opção podemos automatizar alguns strings da mensagem de erro
+        [DisplayFormat(DataFormatString = "{0:F4}")]
         public double TaxaReferencia { get; set; }         //atributo basico
 
         //[Required(ErrorMessage = "{0} required")]   //como opção podemos automatizar alguns strings da mensagem de erro

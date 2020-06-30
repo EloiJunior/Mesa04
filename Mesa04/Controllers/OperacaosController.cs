@@ -74,9 +74,22 @@ namespace Mesa04.Controllers
 
 
         //Metodo Grouping Serch
-        public async Task<IActionResult> GroupingSearch()
+        public async Task<IActionResult> GroupingSearch(DateTime? minDate, DateTime? maxDate)
         {
-            return View();
+            if (!minDate.HasValue) // if criado para colocar o primeiro dia do ano atual quando não for preenchido o campo do SimpleSearch
+            {
+                minDate = new DateTime(DateTime.Now.Year, 1, 1);
+            }
+
+            if (!maxDate.HasValue) // if criado para colocar a data atual quando não for preenchido o campo do SimpleSearch
+            {
+                maxDate = DateTime.Now;
+            }
+            ViewData["minDate"] = minDate.Value.ToString("yyyy-MM-dd"); //linha criada para passar o valor do minDate para o campo do SimpleSearch
+            ViewData["maxDate"] = maxDate.Value.ToString("yyyy-MM-dd"); //linha criada para passar o valor do maxDate para o campo do SimpleSearch
+
+            var list = await _operacaoService.FindByDateGroupingAsync(minDate, maxDate);
+            return View(list);
         }
 
         // GET: Operacaos/Details/5
