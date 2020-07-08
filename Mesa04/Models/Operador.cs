@@ -78,7 +78,7 @@ namespace Mesa04.Models
             Operacoes.Remove(fchto);
         }
         //operação de calculo do total de vendas do operador, com data inicial e final
-        public double TotalSales(DateTime inicial, DateTime final)
+        public decimal TotalSales(DateTime inicial, DateTime final)
         {
             return Operacoes.Where(fchto => fchto.Data >= inicial && fchto.Data <= final).Sum(fchto => fchto.Valor);
         }

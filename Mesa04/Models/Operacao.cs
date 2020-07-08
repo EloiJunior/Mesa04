@@ -44,8 +44,10 @@ namespace Mesa04.Models
 
         [Required(ErrorMessage = "{0} required")]  //como opção podemos automatizar alguns strings da mensagem de erro
         [DisplayFormat(DataFormatString = "{0:F2}")]
-        //[DisplayFormat(DataFormatString = "{0:C2}")]
-        public double Valor { get; set; }      //atributo basico
+//        [DataType(DataType.Currency)]
+//        [DisplayFormat(DataFormatString = "{0:C2}")]
+        //[Display(Name = "Preço"), Range(1, 100), DataType(DataType.Currency)]
+        public decimal Valor { get; set; }      //atributo basico
 
         [Required(ErrorMessage = "{0} required")]  //como opção podemos automatizar alguns strings da mensagem de erro
         [DisplayFormat(DataFormatString = "{0:F4}")]
@@ -96,7 +98,7 @@ namespace Mesa04.Models
         }
 
         //Construtor com argumento
-        public Operacao(int id, /*Tipo tipo,*/ /*Operador operador,*/ DateTime data, /*Cliente cliente,*/ double valor, double taxa, double despesa, int fluxoMn, int fluxoMe, double taxaReferencia /*, BancoMe banco, SaleStatus status*/)
+        public Operacao(int id, /*Tipo tipo,*/ /*Operador operador,*/ DateTime data, /*Cliente cliente,*/ decimal valor, double taxa, double despesa, int fluxoMn, int fluxoMe, double taxaReferencia /*, BancoMe banco, SaleStatus status*/)
         {
             Id = id;
             //Tipo = tipo;

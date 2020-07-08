@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Mesa04.Models;
 using Mesa04.Services;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace Mesa04
 {
@@ -54,6 +56,17 @@ namespace Mesa04
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            //Linhas criadas pelo Dani para padronizar a regionalização da aplicaçao como PT-BR
+            var supportedCultures = new[] { new CultureInfo("pt-BR") };
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(culture: "pt-BR", uiCulture: "pt-BR"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
+            //fim do bloco criado pelo Dani para setar a regionalização PT-BR
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

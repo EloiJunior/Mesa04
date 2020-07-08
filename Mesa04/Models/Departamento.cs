@@ -38,7 +38,7 @@ namespace Mesa04.Models
         }
 
         //operação (metodo customizado) para retornar o total de vendas do departamento
-        public double TotalSales(DateTime inicial, DateTime final)
+        public decimal TotalSales(DateTime inicial, DateTime final)
         {
             return Operadores.Sum(operador => operador.TotalSales(inicial, final));
         }
